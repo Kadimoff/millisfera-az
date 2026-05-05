@@ -18,7 +18,9 @@ services:
       start_period: 30s
 
   wordpress:
-    image: wordpress:6.7-php8.3-apache
+    build:
+      context: .
+      dockerfile: Dockerfile.coolify
     restart: unless-stopped
     depends_on:
       db:
@@ -41,8 +43,6 @@ services:
             $$_SERVER['HTTPS'] = 'on';
         }
     volumes:
-      - wp_data:/var/www/html
-      - ./wp-content/themes/millisfera-az:/var/www/html/wp-content/themes/millisfera-az
       - ${MILLISFERA_PLUGINS_PATH:-/var/lib/docker/volumes/millisferaaz_wp_data/_data/wp-content/plugins}:/var/www/html/wp-content/plugins
       - ${MILLISFERA_UPLOADS_PATH:-/var/lib/docker/volumes/millisferaaz_wp_data/_data/wp-content/uploads}:/var/www/html/wp-content/uploads
     healthcheck:
@@ -54,4 +54,3 @@ services:
 
 volumes:
   db_data:
-  wp_data:

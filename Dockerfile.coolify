@@ -1,0 +1,8 @@
+FROM wordpress:6.7-php8.3-apache
+
+COPY docker/php-production.ini /usr/local/etc/php/conf.d/zz-production.ini
+COPY docker/apache-servername.conf /etc/apache2/conf-enabled/servername.conf
+COPY docker/headers.load /etc/apache2/mods-enabled/headers.load
+COPY wp-content/themes/millisfera-az /var/www/html/wp-content/themes/millisfera-az
+
+RUN chown -R www-data:www-data /var/www/html/wp-content/themes/millisfera-az

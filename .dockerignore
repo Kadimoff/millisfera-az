@@ -1,0 +1,9 @@
+.git
+.gitignore
+.env
+.env.*
+backups
+wordpress-6.9.4
+*.sql
+*.sql.gz
+*.deb
