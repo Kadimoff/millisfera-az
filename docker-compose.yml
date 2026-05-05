@@ -37,8 +37,8 @@ services:
         define('MILLISFERA_OPENWEATHER_API_KEY', getenv('OPENWEATHER_API_KEY') ?: '');
         define('WP_MEMORY_LIMIT', '256M');
         define('FORCE_SSL_ADMIN', true);
-        if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
-            $_SERVER['HTTPS'] = 'on';
+        if (isset($$_SERVER['HTTP_X_FORWARDED_PROTO']) && $$_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+            $$_SERVER['HTTPS'] = 'on';
         }
     volumes:
       - wp_data:/var/www/html
