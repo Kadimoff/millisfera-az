@@ -16,7 +16,8 @@ $millisfera_whatsapp = 'https://wa.me/994771014436';
     <div class="container footer-top">
         <div>
             <a href="<?php echo esc_url(home_url('/')); ?>" class="footer-logo-link" aria-label="<?php bloginfo('name'); ?> – Ana səhifə">
-                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo.png'); ?>" alt="<?php bloginfo('name'); ?>" class="footer-logo" loading="lazy">
+                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo.png'); ?>" alt="<?php bloginfo('name'); ?>" class="footer-logo site-logo--light" loading="lazy">
+                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo-dark.png'); ?>" alt="<?php bloginfo('name'); ?>" class="footer-logo site-logo--dark" loading="lazy">
             </a>
             <p>Millisfera.az xəbər bloqu sosial şəbəkələrdə aktiv fəaliyyət göstərir və ölkə üzrə geniş oxucu auditoriyasına malikdir.</p>
         </div>

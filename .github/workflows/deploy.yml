@@ -1,0 +1,30 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: root
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            set -e
+            cd /opt/millisfera.az
+
+            # Git pull (theme faylları yenilənir)
+            git pull origin main
+
+            # WordPress container-ı yenidən başlat (DB volume toxunulmaz qalır)
+            docker compose up -d --no-recreate
+
+            # Tema faylları üçün icazələri düzəlt
+            docker exec millisferaaz-wordpress-1 chown -R www-data:www-data /var/www/html/wp-content/themes/millisfera-az
+
+            echo "Deploy tamamlandı: $(date)"

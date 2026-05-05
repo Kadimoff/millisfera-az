@@ -40,7 +40,8 @@ $top_categories = millisfera_top_categories(12);
     <div class="container main-bar">
         <div class="branding">
             <a href="<?php echo esc_url(home_url('/')); ?>" class="site-logo-link" aria-label="<?php bloginfo('name'); ?> – Ana səhifə">
-                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo.png'); ?>" alt="<?php bloginfo('name'); ?>" class="site-logo" loading="eager">
+                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo.png'); ?>" alt="<?php bloginfo('name'); ?>" class="site-logo site-logo--light" loading="eager">
+                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo-dark.png'); ?>" alt="<?php bloginfo('name'); ?>" class="site-logo site-logo--dark" loading="eager">
             </a>
         </div>
 

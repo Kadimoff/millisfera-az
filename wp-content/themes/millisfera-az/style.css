@@ -160,6 +160,21 @@ img {
   display: block;
 }
 
+.site-logo--dark,
+.footer-logo.site-logo--dark {
+  display: none;
+}
+
+:root[data-theme="dark"] .site-logo--light,
+:root[data-theme="dark"] .footer-logo.site-logo--light {
+  display: none;
+}
+
+:root[data-theme="dark"] .site-logo--dark,
+:root[data-theme="dark"] .footer-logo.site-logo--dark {
+  display: block;
+}
+
 .main-nav {
   display: flex;
   align-items: center;
