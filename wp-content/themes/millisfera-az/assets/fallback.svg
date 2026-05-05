@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" fill="none">
+  <rect width="1200" height="675" fill="#F6F7F8"/>
+  <rect x="120" y="155" width="960" height="365" rx="20" fill="#E6E8EB"/>
+  <circle cx="242" cy="258" r="42" fill="#D1D6DB"/>
+  <path d="M338 364L460 243L622 401L742 305L920 460H280L338 364Z" fill="#C3CAD1"/>
+  <text x="600" y="570" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="700" fill="#5F6368">Millisfera.az</text>
+</svg>
