@@ -1,0 +1,57 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-millisfera_wp}
+      MYSQL_USER: ${MYSQL_USER:-millisfera}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  wordpress:
+    image: wordpress:6.7-php8.3-apache
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:${WP_PORT:-8091}:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE:-millisfera_wp}
+      WORDPRESS_DB_USER: ${MYSQL_USER:-millisfera}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_TABLE_PREFIX: wp_
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_HOME', getenv('WP_SITE_URL') ?: 'https://millisfera.az');
+        define('WP_SITEURL', getenv('WP_SITE_URL') ?: 'https://millisfera.az');
+        define('MILLISFERA_OPENWEATHER_API_KEY', getenv('OPENWEATHER_API_KEY') ?: '');
+        define('WP_MEMORY_LIMIT', '256M');
+        define('FORCE_SSL_ADMIN', true);
+        if (isset($$_SERVER['HTTP_X_FORWARDED_PROTO']) && $$_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+            $$_SERVER['HTTPS'] = 'on';
+        }
+    volumes:
+      - wp_data:/var/www/html
+      - ./wp-content/themes/millisfera-az:/var/www/html/wp-content/themes/millisfera-az
+      - ${MILLISFERA_PLUGINS_PATH:-/var/lib/docker/volumes/millisferaaz_wp_data/_data/wp-content/plugins}:/var/www/html/wp-content/plugins
+      - ${MILLISFERA_UPLOADS_PATH:-/var/lib/docker/volumes/millisferaaz_wp_data/_data/wp-content/uploads}:/var/www/html/wp-content/uploads
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/wp-login.php"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 90s
+
+volumes:
+  db_data:
+  wp_data:
