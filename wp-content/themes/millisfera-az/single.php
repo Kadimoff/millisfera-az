@@ -12,8 +12,10 @@ get_header();
             $tags = get_the_tags();
             ?>
             <nav class="breadcrumb" aria-label="breadcrumb">
-                <a href="<?php echo esc_url(home_url('/')); ?>">Ana səhifə</a> / 
-                <a href="<?php echo esc_url($category['url']); ?>"><?php echo esc_html($category['name']); ?></a> / 
+                <a href="<?php echo esc_url(home_url('/')); ?>">Ana səhifə</a>
+                <span class="breadcrumb-sep" aria-hidden="true">/</span>
+                <a href="<?php echo esc_url($category['url']); ?>"><?php echo esc_html($category['name']); ?></a>
+                <span class="breadcrumb-sep" aria-hidden="true">/</span>
                 <span><?php the_title(); ?></span>
             </nav>
 

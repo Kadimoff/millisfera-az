@@ -25,7 +25,7 @@ $hero_logo_html = sprintf(
     <?php if (!empty($latest_posts)) : ?>
         <section class="breaking" aria-label="Son dəqiqə">
             <div class="breaking-label">Son Dəqiqə</div>
-            <div class="breaking-track-wrap">
+            <div class="breaking-track-wrap" aria-live="polite">
                 <div class="breaking-track">
                     <?php
                     $rolling_ids = array_merge($exclude_ids, $exclude_ids);

@@ -1479,6 +1479,11 @@ h4 {
   color: var(--text-mute);
 }
 
+.breadcrumb-sep {
+  margin: 0 0.4rem;
+  color: var(--text-mute);
+}
+
 .single-title {
   font-size: clamp(1.8rem, 2.8vw, 2.6rem);
   margin-top: 0.55rem;
