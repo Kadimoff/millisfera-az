@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 
 get_header();
 ?>
-<div class="container" style="max-width:var(--content);">
+<div class="container container--narrow">
     <header class="page-head">
         <h1>404</h1>
         <p>Axtardığınız səhifə tapılmadı. Ana səhifəyə qayıda və ya axtarış edə bilərsiniz.</p>

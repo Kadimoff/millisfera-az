@@ -15,7 +15,7 @@ get_header();
 
         <div class="archive-list">
             <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-                <?php millisfera_render_post_card(get_post(), 'compact'); ?>
+                <?php millisfera_render_post_card(get_post(), 'large'); ?>
             <?php endwhile; else : ?>
                 <p>Axtardığınız sözə uyğun nəticə tapılmadı.</p>
             <?php endif; ?>

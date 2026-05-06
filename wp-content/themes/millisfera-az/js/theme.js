@@ -4,6 +4,44 @@
   const progress = document.querySelector('[data-reading-progress]');
   const themeToggle = document.querySelector('[data-theme-toggle]');
   const storageKey = 'millisfera-theme';
+  var activeFocusTrap = null;
+
+  var getFocusableElements = function (container) {
+    if (!container) return [];
+    return Array.prototype.slice.call(container.querySelectorAll(
+      'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )).filter(function (el) {
+      return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+    });
+  };
+
+  var trapFocus = function (container, event) {
+    var focusable = getFocusableElements(container);
+    if (!focusable.length) return;
+    var first = focusable[0];
+    var last = focusable[focusable.length - 1];
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
+
+  var enableFocusTrap = function (container, returnFocusEl) {
+    activeFocusTrap = { container: container, returnFocusEl: returnFocusEl || null };
+  };
+
+  var disableFocusTrap = function (container) {
+    if (!activeFocusTrap || activeFocusTrap.container !== container) return;
+    var focusTarget = activeFocusTrap.returnFocusEl;
+    activeFocusTrap = null;
+    if (focusTarget && typeof focusTarget.focus === 'function') {
+      focusTarget.focus();
+    }
+  };
 
   const applyTheme = function (theme) {
     document.documentElement.setAttribute('data-theme', theme);
@@ -32,6 +70,16 @@
       const isOpen = mobileDrawer.classList.toggle('open');
       menuToggle.setAttribute('aria-expanded', String(isOpen));
       menuToggle.setAttribute('aria-label', isOpen ? millisferaTheme.menuClose : millisferaTheme.menuOpen);
+      mobileDrawer.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+      if (isOpen) {
+        enableFocusTrap(mobileDrawer, menuToggle);
+        var drawerFocusable = getFocusableElements(mobileDrawer);
+        if (drawerFocusable.length) {
+          drawerFocusable[0].focus();
+        }
+      } else {
+        disableFocusTrap(mobileDrawer);
+      }
     });
   }
 
@@ -47,6 +95,7 @@
     searchOverlay.setAttribute('aria-hidden', 'false');
     if (searchToggle) searchToggle.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
+    enableFocusTrap(searchOverlay, searchToggle);
     window.setTimeout(function () {
       if (searchInput) searchInput.focus();
     }, 50);
@@ -58,6 +107,7 @@
     searchOverlay.setAttribute('aria-hidden', 'true');
     if (searchToggle) searchToggle.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
+    disableFocusTrap(searchOverlay);
   };
 
   if (searchToggle) {
@@ -72,7 +122,33 @@
     searchBackdrop.addEventListener('click', closeSearch);
   }
 
+  document.addEventListener('click', function (e) {
+    if (!mobileDrawer || !menuToggle || !mobileDrawer.classList.contains('open')) return;
+    if (mobileDrawer.contains(e.target) || menuToggle.contains(e.target)) return;
+    mobileDrawer.classList.remove('open');
+    mobileDrawer.setAttribute('aria-hidden', 'true');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.setAttribute('aria-label', millisferaTheme.menuOpen);
+    disableFocusTrap(mobileDrawer);
+  });
+
   document.addEventListener('keydown', function (e) {
+    if (e.key === 'Tab' && activeFocusTrap) {
+      trapFocus(activeFocusTrap.container, e);
+      return;
+    }
+
+    if (e.key === 'Escape' && mobileDrawer && mobileDrawer.classList.contains('open')) {
+      mobileDrawer.classList.remove('open');
+      mobileDrawer.setAttribute('aria-hidden', 'true');
+      if (menuToggle) {
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', millisferaTheme.menuOpen);
+      }
+      disableFocusTrap(mobileDrawer);
+      return;
+    }
+
     if (e.key === 'Escape' && searchOverlay && searchOverlay.classList.contains('is-open')) {
       closeSearch();
     }
@@ -500,9 +576,16 @@
     var iazDarkCss  = {"hfc":"rgba(215,215,216,1)","rfc":"rgba(180,188,196,1)","hbgc":"rgba(18,26,31,1)","tbgc":"rgba(37,199,140,1)","bbgc":"rgba(18,26,31,1)","sbgc":"rgba(26,35,40,1)"};
     var iazLightCss = {"hfc":"rgba(17,17,17,1)","rfc":"rgba(95,99,104,1)","hbgc":"rgba(238,242,243,1)","tbgc":"rgba(0,167,111,1)","bbgc":"rgba(255,255,255,1)","sbgc":"rgba(224,230,233,1)"};
     var iazSymbols  = {"f":["EURUSD","GBPUSD","USDJPY","USDCAD","USDCHF","AUDUSD"],"i":["DOWJ","SP500","DAX","FTSE100"],"m":["XAUUSD","XAGUSD","XPDUSD","XPTUSD"],"e":["COTTON","SUGAR","NATG","OILUK"],"c":["BTCUSD","ETHUSD","LTCUSD","BCHUSD"],"s":["APPLE","AIG","CITIGROUP","BOEING"]};
-    var iazLoaded   = false;
+    var currentInvestazTheme = null;
 
     var renderInvestaz = function (dark) {
+      if (currentInvestazTheme === (dark ? 'dark' : 'light')) {
+        return;
+      }
+      var oldScript = investazWrap.querySelector('[data-investaz-script]');
+      if (oldScript) {
+        oldScript.remove();
+      }
       investazWrap.innerHTML = '<a href="https://www.investaz.az" target="_blank" rel="noopener" id="iazw_markets_tool">InvestAZ</a>';
       window.iazw_markets = {
         width: investazWrap.offsetWidth || 300,
@@ -513,13 +596,14 @@
         theme: dark ? 'dark' : 'light'
       };
       var s = document.createElement('script');
-      s.src = '//static.investaz.az/embed/tools/js/iazw-markets-v2.js?v=' + Date.now();
+      s.src = 'https://static.investaz.az/embed/tools/js/iazw-markets-v2.js?v=' + Date.now();
+      s.setAttribute('data-investaz-script', 'true');
       investazWrap.appendChild(s);
+      currentInvestazTheme = dark ? 'dark' : 'light';
     };
 
     var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     renderInvestaz(isDark);
-    iazLoaded = true;
 
     new MutationObserver(function (mutations) {
       mutations.forEach(function (m) {

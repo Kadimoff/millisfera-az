@@ -112,7 +112,7 @@ function millisfera_render_post_card(WP_Post $post, string $size = 'compact'): v
     $thumbnail_size = 'millisfera_card';
 
     if ($size === 'large') {
-        $thumbnail_size = 'large';
+        $thumbnail_size = 'millisfera_hero';
     } elseif ($size === 'hero') {
         $thumbnail_size = 'full';
     }

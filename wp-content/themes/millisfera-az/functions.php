@@ -133,6 +133,46 @@ function millisfera_excerpt_more(): string
 }
 add_filter('excerpt_more', 'millisfera_excerpt_more');
 
+function millisfera_newsletter_redirect_url(string $status): string
+{
+    $referer = wp_get_referer();
+    $target = $referer ? remove_query_arg('newsletter_status', $referer) : home_url('/');
+
+    return add_query_arg('newsletter_status', $status, $target);
+}
+
+function millisfera_handle_newsletter_subscription(): void
+{
+    if (!isset($_POST['millisfera_newsletter_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['millisfera_newsletter_nonce'])), 'millisfera_newsletter_subscribe')) {
+        wp_safe_redirect(millisfera_newsletter_redirect_url('invalid'));
+        exit;
+    }
+
+    $email = isset($_POST['newsletter_email']) ? sanitize_email(wp_unslash($_POST['newsletter_email'])) : '';
+    if (!$email || !is_email($email)) {
+        wp_safe_redirect(millisfera_newsletter_redirect_url('invalid'));
+        exit;
+    }
+
+    $subscribers = get_option('millisfera_newsletter_subscribers', []);
+    if (!is_array($subscribers)) {
+        $subscribers = [];
+    }
+
+    if (in_array($email, $subscribers, true)) {
+        wp_safe_redirect(millisfera_newsletter_redirect_url('exists'));
+        exit;
+    }
+
+    $subscribers[] = $email;
+    update_option('millisfera_newsletter_subscribers', array_values(array_unique($subscribers)));
+
+    wp_safe_redirect(millisfera_newsletter_redirect_url('success'));
+    exit;
+}
+add_action('admin_post_nopriv_millisfera_newsletter_subscribe', 'millisfera_handle_newsletter_subscription');
+add_action('admin_post_millisfera_newsletter_subscribe', 'millisfera_handle_newsletter_subscription');
+
 function millisfera_ajax_load_more_posts(): void
 {
     check_ajax_referer('millisfera_nonce', 'nonce');

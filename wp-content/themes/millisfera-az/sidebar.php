@@ -11,6 +11,7 @@ $trending = new WP_Query([
     'order' => 'DESC',
     'ignore_sticky_posts' => true,
 ]);
+$newsletter_status = isset($_GET['newsletter_status']) ? sanitize_key(wp_unslash($_GET['newsletter_status'])) : '';
 ?>
 <aside class="sidebar-sticky">
     <section class="widget widget-weather">
@@ -88,9 +89,18 @@ $trending = new WP_Query([
     <section class="widget">
         <h3>Bülleten</h3>
         <p>Gündəlik ən vacib xəbərləri e-poçt ilə alın.</p>
-        <form action="#" method="post">
-            <input type="email" placeholder="E-poçt ünvanınız" style="width:100%;min-height:40px;border:1px solid var(--border);border-radius:10px;padding:0 .7rem;">
-            <button class="button" style="width:100%;margin-top:.6rem;" type="submit">Abunə ol</button>
+        <?php if ($newsletter_status === 'success') : ?>
+            <p class="newsletter-status newsletter-status--success">Abunəliyiniz qeydə alındı.</p>
+        <?php elseif ($newsletter_status === 'exists') : ?>
+            <p class="newsletter-status">Bu e-poçt artıq qeydiyyatdadır.</p>
+        <?php elseif ($newsletter_status === 'invalid') : ?>
+            <p class="newsletter-status newsletter-status--error">Düzgün e-poçt ünvanı daxil edin.</p>
+        <?php endif; ?>
+        <form class="newsletter-form" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
+            <input type="hidden" name="action" value="millisfera_newsletter_subscribe">
+            <?php wp_nonce_field('millisfera_newsletter_subscribe', 'millisfera_newsletter_nonce'); ?>
+            <input class="newsletter-field" type="email" name="newsletter_email" placeholder="E-poçt ünvanınız" required>
+            <button class="button newsletter-button" type="submit">Abunə ol</button>
         </form>
     </section>
 </aside>

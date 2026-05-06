@@ -13,7 +13,7 @@ if (post_password_required()) {
     </header>
 
     <?php if (have_comments()) : ?>
-        <ol style="padding-left:1rem;">
+        <ol class="comments-list">
             <?php wp_list_comments(['style' => 'ol', 'short_ping' => true]); ?>
         </ol>
         <div class="pagination"><?php paginate_comments_links(); ?></div>

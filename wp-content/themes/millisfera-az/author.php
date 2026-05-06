@@ -11,7 +11,7 @@ $author = get_queried_object();
         <header class="page-head">
             <h1><?php echo esc_html($author->display_name ?? 'Yazar'); ?></h1>
             <p><?php echo esc_html(get_the_author_meta('description', (int) ($author->ID ?? 0)) ?: 'Yazar haqqında məlumat əlavə olunmayıb.'); ?></p>
-            <div style="margin-top:.7rem;"><?php echo get_avatar((int) ($author->ID ?? 0), 88); ?></div>
+            <div class="author-avatar-wrap"><?php echo get_avatar((int) ($author->ID ?? 0), 88); ?></div>
         </header>
 
         <div class="archive-list">

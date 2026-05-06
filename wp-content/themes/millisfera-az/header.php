@@ -74,7 +74,7 @@ $top_categories = millisfera_top_categories(12);
         </div>
     </div>
 
-    <div class="mobile-drawer" data-mobile-drawer>
+    <div class="mobile-drawer" data-mobile-drawer aria-hidden="true">
         <div class="container">
             <nav class="drawer-nav" aria-label="Mobil menyu">
                 <a class="drawer-link" href="<?php echo esc_url(home_url('/haqqimizda')); ?>">

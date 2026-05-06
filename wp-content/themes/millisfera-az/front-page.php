@@ -13,9 +13,13 @@ $latest_query = new WP_Query([
 ]);
 $latest_posts = $latest_query->posts;
 $exclude_ids = array_map('intval', wp_list_pluck($latest_posts, 'ID'));
-$hero_logo_html = has_custom_logo()
-    ? get_custom_logo()
-    : '<a class="hero-logo-text" href="' . esc_url(home_url('/')) . '">' . esc_html(get_bloginfo('name')) . '</a>';
+$hero_logo_html = sprintf(
+    '<a href="%1$s" class="site-logo-link hero-logo-link" aria-label="%2$s"><img src="%3$s" alt="%2$s" class="site-logo site-logo--light" loading="lazy"><img src="%4$s" alt="%2$s" class="site-logo site-logo--dark" loading="lazy"></a>',
+    esc_url(home_url('/')),
+    esc_attr(get_bloginfo('name')),
+    esc_url(get_template_directory_uri() . '/assets/img/logo.png'),
+    esc_url(get_template_directory_uri() . '/assets/img/logo-dark.png')
+);
 ?>
 <div class="container">
     <?php if (!empty($latest_posts)) : ?>
@@ -41,7 +45,7 @@ $hero_logo_html = has_custom_logo()
             </div>
         </section>
 
-        <section class="hero-rotator" data-hero-slider data-interval="2000" aria-label="Son paylaşılan xəbərlər">
+        <section class="hero-rotator" data-hero-slider data-interval="6000" aria-label="Son paylaşılan xəbərlər">
             <div class="hero-slider-viewport">
                 <?php foreach ($latest_posts as $index => $slide_post) :
                     $slide_category = millisfera_primary_category_link((int) $slide_post->ID);
