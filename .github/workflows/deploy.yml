@@ -16,15 +16,4 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             set -e
-            cd /opt/millisfera.az
-
-            # Git pull (theme faylları yenilənir)
-            git pull origin main
-
-            # WordPress container-ı yenidən başlat (DB volume toxunulmaz qalır)
-            docker compose up -d --no-recreate
-
-            # Tema faylları üçün icazələri düzəlt
-            docker exec millisferaaz-wordpress-1 chown -R www-data:www-data /var/www/html/wp-content/themes/millisfera-az
-
-            echo "Deploy tamamlandı: $(date)"
+            bash /opt/coolify-source/millisfera-az/deploy/pull-deploy.sh
