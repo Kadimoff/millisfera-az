@@ -6,4 +6,4 @@ Wants=network-online.target
 [Service]
 Type=oneshot
 WorkingDirectory=/opt/coolify-source/millisfera-az
-ExecStart=/opt/coolify-source/millisfera-az/deploy/pull-deploy.sh
+ExecStart=/usr/bin/env bash /opt/coolify-source/millisfera-az/deploy/pull-deploy.sh
