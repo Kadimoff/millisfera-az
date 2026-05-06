@@ -5,7 +5,7 @@
 if (!defined('ABSPATH')) exit;
 get_header();
 
-$site = get_bloginfo('name');
+$site = preg_replace('/\.az$/i', '', wp_strip_all_tags(get_bloginfo('name')));
 $phone = '+994-77-101-4436';
 $tel_link = 'tel:+994771014436';
 $whatsapp_link = 'https://wa.me/994771014436';

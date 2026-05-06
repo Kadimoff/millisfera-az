@@ -4,7 +4,7 @@
  */
 if (!defined('ABSPATH')) exit;
 get_header();
-$site = get_bloginfo('name');
+$site = preg_replace('/\.az$/i', '', wp_strip_all_tags(get_bloginfo('name')));
 ?>
 
 <div class="about-page">
