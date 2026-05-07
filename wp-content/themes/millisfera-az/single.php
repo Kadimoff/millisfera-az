@@ -99,8 +99,6 @@ get_header();
                     </div>
                 </section>
             <?php endif; wp_reset_postdata(); ?>
-
-            <?php comments_template(); ?>
         <?php endwhile; ?>
     </section>
 

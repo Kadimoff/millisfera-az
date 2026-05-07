@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 
 get_header();
 ?>
-<div class="container" style="max-width:var(--content);">
+<div class="container container--narrow">
     <?php while (have_posts()) : the_post(); ?>
         <header class="page-head">
             <h1><?php the_title(); ?></h1>
@@ -14,7 +14,6 @@ get_header();
         <article class="post-content">
             <?php the_content(); ?>
         </article>
-        <?php comments_template(); ?>
     <?php endwhile; ?>
 </div>
 <?php

@@ -133,6 +133,33 @@ function millisfera_excerpt_more(): string
 }
 add_filter('excerpt_more', 'millisfera_excerpt_more');
 
+function millisfera_disable_comments_support(): void
+{
+    foreach (['post', 'page'] as $post_type) {
+        if (post_type_supports($post_type, 'comments')) {
+            remove_post_type_support($post_type, 'comments');
+        }
+
+        if (post_type_supports($post_type, 'trackbacks')) {
+            remove_post_type_support($post_type, 'trackbacks');
+        }
+    }
+}
+add_action('init', 'millisfera_disable_comments_support');
+
+function millisfera_comments_closed(): bool
+{
+    return false;
+}
+add_filter('comments_open', 'millisfera_comments_closed', 20, 2);
+add_filter('pings_open', 'millisfera_comments_closed', 20, 2);
+
+function millisfera_hide_existing_comments(array $comments): array
+{
+    return [];
+}
+add_filter('comments_array', 'millisfera_hide_existing_comments', 10, 2);
+
 function millisfera_newsletter_redirect_url(string $status): string
 {
     $referer = wp_get_referer();
