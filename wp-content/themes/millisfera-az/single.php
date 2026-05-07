@@ -27,7 +27,6 @@ get_header();
             <?php endif; ?>
 
             <div class="meta">
-                <span><?php the_author_posts_link(); ?></span>
                 <span><?php echo esc_html(millisfera_format_date()); ?></span>
                 <span>Yenilənmə: <?php echo esc_html(millisfera_format_date((int) get_post_modified_time('U'))); ?></span>
                 <span><?php echo esc_html(millisfera_read_time()); ?> dəq oxu</span>
@@ -65,11 +64,6 @@ get_header();
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
-
-            <section class="author-box">
-                <h3><?php the_author(); ?></h3>
-                <p><?php echo esc_html(get_the_author_meta('description') ?: 'Müəllif bio məlumatı əlavə edilməyib.'); ?></p>
-            </section>
 
             <div class="post-nav">
                 <div><?php previous_post_link('%link', '← %title'); ?></div>

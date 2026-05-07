@@ -1557,14 +1557,27 @@ h4 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.8rem;
+  align-items: stretch;
+}
+
+.post-nav > div {
+  min-width: 0;
+  display: flex;
 }
 
 .post-nav a {
+  width: 100%;
+  min-height: 100%;
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 0.7rem;
   font-size: 0.9rem;
   color: var(--text-soft);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
 }
 
 .share-rail {
