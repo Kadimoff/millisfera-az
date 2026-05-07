@@ -9,9 +9,10 @@ $site = preg_replace('/\.az$/i', '', wp_strip_all_tags(get_bloginfo('name')));
 $phone = '+994-77-101-4436';
 $tel_link = 'tel:+994771014436';
 $whatsapp_link = 'https://wa.me/994771014436';
-$facebook_link = 'https://www.facebook.com/share/18UNQkckkV/';
-$instagram_link = 'https://www.instagram.com/millisfera?igsh=MXRmeWVyMnpsaWpjeA==';
-$youtube_link = 'https://youtube.com/@millisfera?si=4V-BudZomUk08qv8';
+$facebook_link = 'https://www.facebook.com/share/1GWRuuPedi/';
+$instagram_link = 'https://www.instagram.com/millisfera.az?igsh=MXRmeWVyMnpsaWpjeA==';
+$tiktok_link = 'https://www.tiktok.com/@millisfera_?_r=1&_t=ZS-969ksB6NzM0';
+$youtube_link = 'https://youtube.com/@millisfera?si=VAtn7m0u-j25j5A0';
 ?>
 
 <div class="about-page">
@@ -48,7 +49,7 @@ $youtube_link = 'https://youtube.com/@millisfera?si=4V-BudZomUk08qv8';
         </div>
         <div class="about-stat">
             <strong>Sosial media</strong>
-            <span>Facebook, Instagram, YouTube</span>
+            <span>Facebook, Instagram, TikTok, YouTube</span>
         </div>
     </section>
 
@@ -69,7 +70,11 @@ $youtube_link = 'https://youtube.com/@millisfera?si=4V-BudZomUk08qv8';
             </div>
             <div class="about-team-card">
                 <strong>Instagram</strong>
-                <span><a href="<?php echo esc_url($instagram_link); ?>" target="_blank" rel="noopener">@millisfera</a></span>
+                <span><a href="<?php echo esc_url($instagram_link); ?>" target="_blank" rel="noopener">@millisfera.az</a></span>
+            </div>
+            <div class="about-team-card">
+                <strong>TikTok</strong>
+                <span><a href="<?php echo esc_url($tiktok_link); ?>" target="_blank" rel="noopener">@millisfera_</a></span>
             </div>
             <div class="about-team-card">
                 <strong>YouTube</strong>

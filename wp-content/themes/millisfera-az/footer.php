@@ -4,9 +4,10 @@ if (!defined('ABSPATH')) {
 }
 
 $footer_categories = millisfera_top_categories(8);
-$millisfera_facebook = 'https://www.facebook.com/share/18UNQkckkV/';
-$millisfera_instagram = 'https://www.instagram.com/millisfera?igsh=MXRmeWVyMnpsaWpjeA==';
-$millisfera_youtube = 'https://youtube.com/@millisfera?si=4V-BudZomUk08qv8';
+$millisfera_facebook = 'https://www.facebook.com/share/1GWRuuPedi/';
+$millisfera_instagram = 'https://www.instagram.com/millisfera.az?igsh=MXRmeWVyMnpsaWpjeA==';
+$millisfera_tiktok = 'https://www.tiktok.com/@millisfera_?_r=1&_t=ZS-969ksB6NzM0';
+$millisfera_youtube = 'https://youtube.com/@millisfera?si=VAtn7m0u-j25j5A0';
 $millisfera_phone = '+994-77-101-4436';
 $millisfera_tel = '+994771014436';
 $millisfera_whatsapp = 'https://wa.me/994771014436';
@@ -48,6 +49,7 @@ $millisfera_whatsapp = 'https://wa.me/994771014436';
             <div class="footer-list">
                 <a href="<?php echo esc_url($millisfera_facebook); ?>" target="_blank" rel="noopener">Facebook</a>
                 <a href="<?php echo esc_url($millisfera_instagram); ?>" target="_blank" rel="noopener">Instagram</a>
+                <a href="<?php echo esc_url($millisfera_tiktok); ?>" target="_blank" rel="noopener">TikTok</a>
                 <a href="<?php echo esc_url($millisfera_youtube); ?>" target="_blank" rel="noopener">YouTube</a>
             </div>
         </div>
@@ -71,6 +73,12 @@ $millisfera_whatsapp = 'https://wa.me/994771014436';
         </span>
         <strong>Instagram</strong>
     </a>
+    <a class="rail-button" href="<?php echo esc_url($millisfera_tiktok); ?>" target="_blank" rel="noopener" aria-label="TikTok">
+        <span aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20"><path fill="#111111" d="M16.6 3c.4 1.4 1.2 2.5 2.4 3.3 1 .7 2.2 1.1 3.4 1.1v3.3c-1.6 0-3.2-.4-4.6-1.1v6.4c0 1.4-.4 2.8-1.2 3.9-1.3 1.9-3.5 3.1-5.9 3.1-3.8 0-6.8-3.1-6.8-6.8s3.1-6.8 6.8-6.8c.3 0 .6 0 .9.1v3.4c-.3-.1-.6-.2-.9-.2-1.9 0-3.4 1.5-3.4 3.4s1.5 3.4 3.4 3.4c1.8 0 3.2-1.4 3.4-3.2V3h2.5z"/></svg>
+        </span>
+        <strong>TikTok</strong>
+    </a>
     <a class="rail-button" href="<?php echo esc_url($millisfera_youtube); ?>" target="_blank" rel="noopener" aria-label="YouTube">
         <span aria-hidden="true">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20"><path fill="#FF0000" d="M23.5 6.2a3.02 3.02 0 0 0-2.13-2.14C19.48 3.56 12 3.56 12 3.56s-7.48 0-9.37.5A3.02 3.02 0 0 0 .5 6.2 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.8 3.02 3.02 0 0 0 2.13 2.14c1.89.5 9.37.5 9.37.5s7.48 0 9.37-.5a3.02 3.02 0 0 0 2.13-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.8zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></svg>
@@ -83,13 +91,15 @@ $millisfera_whatsapp = 'https://wa.me/994771014436';
         </span>
         <strong>WhatsApp</strong>
     </a>
+    <a class="rail-button" href="<?php echo esc_url('tel:' . $millisfera_tel); ?>" aria-label="Zəng et">
+        <span aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20"><path fill="#0ea5e9" d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V21c0 .6-.4 1-1 1C10.6 22 2 13.4 2 3c0-.6.4-1 1-1h4.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1l-2.2 2.2z"/></svg>
+        </span>
+        <strong>Zəng et</strong>
+    </a>
     <a class="rail-button" href="<?php echo esc_url(home_url('/reklam')); ?>" aria-label="Reklam">
         <span aria-hidden="true">AD</span>
         <strong>Reklam</strong>
-    </a>
-    <a class="rail-button" href="<?php echo esc_url(home_url('/elaqe')); ?>" aria-label="Əlaqə">
-        <span aria-hidden="true">@</span>
-        <strong>Əlaqə</strong>
     </a>
     <button class="rail-button rail-weather" type="button" data-weather-rail data-city="Baku,AZ" aria-label="Bakı hava məlumatı">
         <span aria-hidden="true">☀</span>
