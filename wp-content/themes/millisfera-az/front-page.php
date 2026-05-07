@@ -140,7 +140,7 @@ $hero_logo_html = sprintf(
     $feed_query = new WP_Query([
         'post_type' => 'post',
         'post_status' => 'publish',
-        'posts_per_page' => 12,
+        'posts_per_page' => 20,
         'paged' => 1,
         'ignore_sticky_posts' => true,
     ]);
@@ -166,7 +166,9 @@ $hero_logo_html = sprintf(
 
         <div class="feed-status" data-feed-status aria-live="polite"></div>
         <?php if ((int) $feed_query->max_num_pages > 1) : ?>
-            <div class="infinite-sentinel" data-infinite-sentinel></div>
+            <div class="feed-more-wrap">
+                <button class="button feed-more-button" type="button" data-feed-more>Daha çox</button>
+            </div>
         <?php endif; ?>
     </section>
     <?php wp_reset_postdata(); ?>

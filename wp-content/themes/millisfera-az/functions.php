@@ -92,6 +92,7 @@ function millisfera_enqueue_assets(): void
         'weatherNonce' => wp_create_nonce('millisfera_weather'),
         'weatherCity' => getenv('OPENWEATHER_CITY') ?: 'Baku,AZ',
         'feedLoading' => 'Xəbərlər yüklənir...',
+        'feedMore' => 'Daha çox',
         'feedEnd' => 'Bütün xəbərlər göstərildi.',
     ]);
 }
@@ -211,7 +212,7 @@ function millisfera_ajax_load_more_posts(): void
     $query = new WP_Query([
         'post_type' => 'post',
         'post_status' => 'publish',
-        'posts_per_page' => 12,
+        'posts_per_page' => 20,
         'paged' => $page,
         'ignore_sticky_posts' => true,
         'post__not_in' => $exclude_ids,

@@ -79,15 +79,28 @@ get_header();
                 'ignore_sticky_posts' => true,
                 'category__in' => wp_get_post_categories(get_the_ID()),
             ]);
+            $related_posts = $related_query->posts;
 
-            if ($related_query->have_posts()) :
+            if (count($related_posts) < 3) {
+                $fallback_query = new WP_Query([
+                    'post_type' => 'post',
+                    'post_status' => 'publish',
+                    'posts_per_page' => 3 - count($related_posts),
+                    'post__not_in' => array_merge([get_the_ID()], wp_list_pluck($related_posts, 'ID')),
+                    'ignore_sticky_posts' => true,
+                ]);
+                $related_posts = array_merge($related_posts, $fallback_query->posts);
+                wp_reset_postdata();
+            }
+
+            if (!empty($related_posts)) :
                 ?>
                 <section class="section">
                     <header class="section-head">
                         <h2>Oxşar xəbərlər</h2>
                     </header>
                     <div class="feed-grid">
-                        <?php foreach ($related_query->posts as $related_post) {
+                        <?php foreach ($related_posts as $related_post) {
                             millisfera_render_post_card($related_post, 'compact');
                         } ?>
                     </div>

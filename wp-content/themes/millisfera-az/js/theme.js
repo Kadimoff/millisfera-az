@@ -282,7 +282,7 @@
   }
 
   const feed = document.querySelector('[data-infinite-feed]');
-  const sentinel = document.querySelector('[data-infinite-sentinel]');
+  const feedMoreButton = document.querySelector('[data-feed-more]');
   const status = document.querySelector('[data-feed-status]');
   const revealCards = function (scope) {
     const root = scope || document;
@@ -319,7 +319,7 @@
 
   revealCards(document);
 
-  if (feed && sentinel) {
+  if (feed && feedMoreButton) {
     let page = parseInt(feed.getAttribute('data-page') || '1', 10);
     const maxPages = parseInt(feed.getAttribute('data-max-pages') || '1', 10);
     const exclude = feed.getAttribute('data-exclude') || '';
@@ -340,6 +340,8 @@
       loading = true;
       page += 1;
       setStatus(millisferaTheme.feedLoading || 'Yüklənir...');
+      feedMoreButton.disabled = true;
+      feedMoreButton.textContent = millisferaTheme.feedLoading || 'Yüklənir...';
 
       const body = new URLSearchParams();
       body.set('action', 'millisfera_load_more_posts');
@@ -376,15 +378,17 @@
 
           if (!html || page >= maxPages) {
             finished = true;
-            sentinel.remove();
+            feedMoreButton.remove();
             setStatus(millisferaTheme.feedEnd || 'Bütün xəbərlər göstərildi.');
           } else {
             setStatus('');
+            feedMoreButton.disabled = false;
+            feedMoreButton.textContent = millisferaTheme.feedMore || 'Daha çox';
           }
         })
         .catch(function () {
           finished = true;
-          sentinel.remove();
+          feedMoreButton.remove();
           setStatus('Yükləmə zamanı xəta baş verdi.');
         })
         .finally(function () {
@@ -392,18 +396,7 @@
         });
     };
 
-    const observer = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            loadMore();
-          }
-        });
-      },
-      { rootMargin: '550px 0px' }
-    );
-
-    observer.observe(sentinel);
+    feedMoreButton.addEventListener('click', loadMore);
   }
 
   const categoryCarousels = Array.from(document.querySelectorAll('[data-category-carousel]'));
