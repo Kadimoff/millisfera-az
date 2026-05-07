@@ -35,7 +35,7 @@ function millisfera_seo_head(): void
             'image'     => millisfera_seo_image($post, $fallback_img),
             'published' => get_the_date('c', $post),
             'modified'  => get_the_modified_date('c', $post),
-            'author'    => get_the_author_meta('display_name', (int) $post->post_author),
+            'author'    => $site_name,
             'section'   => millisfera_primary_category_link((int) $post->ID)['name'],
             'keywords'  => millisfera_seo_keywords($post),
         ];
